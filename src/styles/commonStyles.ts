@@ -1,0 +1,73 @@
+import { StyleSheet } from "react-native";
+
+export const commonStyles = StyleSheet.create({
+  cardContainer: {
+    flex: 1,
+    flexDirection: "row",
+    marginVertical: 20,
+    marginHorizontal: 15,
+    backgroundColor: "#FFF8E7",
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
+    overflow: "hidden",
+  },
+  leftSide: {
+    flex: 1,
+    padding: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  rightSide: {
+    flex: 1,
+    padding: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardTitle: {
+    fontSize: 26,
+    fontFamily: "serif",
+    fontWeight: "700",
+    marginBottom: 15,
+    textAlign: "center",
+    color: "#5D4037",
+  },
+  text: {
+    fontSize: 16,
+    fontFamily: "sans-serif",
+    color: "#4E342E",
+    textAlign: "center",
+  },
+  image: { width: 180, height: 120, marginBottom: 15, borderRadius: 8 },
+  imagePlaceholder: {
+    width: 180,
+    height: 120,
+    marginBottom: 15,
+    backgroundColor: "#EDE7F6",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  pageNumber: {
+    fontSize: 12,
+    color: "#5D4037",
+    marginTop: 10,
+    alignSelf: "flex-end",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+  },
+  button: { marginTop: 10 },
+});
