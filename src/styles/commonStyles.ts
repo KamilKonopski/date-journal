@@ -4,9 +4,6 @@ export const commonStyles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     flexDirection: "row",
-    marginVertical: 20,
-    marginHorizontal: 15,
-    backgroundColor: "#FFF8E7",
     borderRadius: 12,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 5 },
@@ -14,18 +11,6 @@ export const commonStyles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 5,
     overflow: "hidden",
-  },
-  leftSide: {
-    flex: 1,
-    padding: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  rightSide: {
-    flex: 1,
-    padding: 20,
-    justifyContent: "center",
-    alignItems: "center",
   },
   cardTitle: {
     fontSize: 26,
