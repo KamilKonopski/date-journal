@@ -30,7 +30,7 @@ export const AnimatedCard: React.FC<AnimatedCardProps> = ({
   });
 
   return (
-    <Animated.View style={[{ width, padding: 20 }, animatedStyle]}>
+    <Animated.View style={[{ width }, animatedStyle]}>
       <DateCard
         card={card}
         pageNumber={index + 1}
