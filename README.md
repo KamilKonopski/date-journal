@@ -77,6 +77,12 @@ ImagePicker: For selecting images from the gallery.
 
 Cover Screen:
 
+<img src="screenshots/IMG_1074.png" width="300" height="600" />
+
 Card Screen:
 
-Date Card:
+<img src="screenshots/IMG_1075.png" width="300" height="600" />
+
+Task Modal:
+
+<img src="screenshots/IMG_1076.png" width="300" height="600" />
