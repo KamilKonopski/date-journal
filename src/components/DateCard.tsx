@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Platform,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { DateCardData } from "../data/dateCards";
@@ -51,10 +52,7 @@ export const DateCard: React.FC<Props> = ({
   };
 
   const handleLocationEdit = () => setEditingLocation(true);
-  const handleLocationSave = () => {
-    setEditingLocation(false);
-    console.log("Nowa lokalizacja:", location);
-  };
+  const handleLocationSave = () => setEditingLocation(false);
 
   return (
     <View style={styles.fullScreenContainer}>
@@ -148,6 +146,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
   cardContainer: {
     backgroundColor: "#FFFFFF",
     borderRadius: 16,
@@ -157,8 +156,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 6,
-    width: "100%",
-    maxWidth: 700,
+    width: Platform.OS === "web" ? 390 : "100%",
+    height: Platform.OS === "web" ? 844 : undefined,
+    ...(Platform.OS === "web" && {
+      boxShadow: "0 0 20px rgba(0,0,0,0.2)",
+    }),
   },
   topRow: {
     flexDirection: "row",
@@ -233,6 +235,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
+    fontFamily: "DancingScript_400Regular",
     fontWeight: "bold",
     color: "#8B0000",
     textAlign: "left",
