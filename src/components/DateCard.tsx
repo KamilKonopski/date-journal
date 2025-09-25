@@ -12,6 +12,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { DateCardData } from "../data/dateCards";
 import { TaskModal } from "./TaskModal";
 import * as ImagePicker from "expo-image-picker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 interface Props {
   card: DateCardData;
@@ -27,9 +28,18 @@ export const DateCard: React.FC<Props> = ({
   onGoBack,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [image, setImage] = useState<string | null>(card.image);
-  const [location, setLocation] = useState<string | null>(card.location);
+  const [image, setImage] = useState<string | null>(card.image || null);
+  const [location, setLocation] = useState<string | null>(
+    card.location || null
+  );
   const [editingLocation, setEditingLocation] = useState(false);
+
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    card.date ? new Date(card.date) : null
+  );
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+
+  const [rating, setRating] = useState<number>(card.rating || 0);
 
   const handleOpenModal = () => setModalVisible(true);
   const handleCloseModal = () => setModalVisible(false);
@@ -38,7 +48,7 @@ export const DateCard: React.FC<Props> = ({
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permission.granted) {
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ["images"],
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 1,
       });
 
@@ -53,6 +63,21 @@ export const DateCard: React.FC<Props> = ({
 
   const handleLocationEdit = () => setEditingLocation(true);
   const handleLocationSave = () => setEditingLocation(false);
+
+  const showDatePicker = () => setDatePickerVisible(true);
+  const hideDatePicker = () => setDatePickerVisible(false);
+
+  const handleDateConfirm = (date: Date) => {
+    setSelectedDate(date);
+    hideDatePicker();
+  };
+
+  const resetRating = () => setRating(0);
+
+  const formatDate = (date: Date | null) => {
+    if (!date) return "Wybierz datę";
+    return date.toLocaleDateString("pl-PL");
+  };
 
   return (
     <View style={styles.fullScreenContainer}>
@@ -100,10 +125,52 @@ export const DateCard: React.FC<Props> = ({
                 </TouchableOpacity>
               )}
             </View>
+
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateLabel}>Data:</Text>
+              <TouchableOpacity onPress={showDatePicker}>
+                <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
+              </TouchableOpacity>
+            </View>
+
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleDateConfirm}
+              onCancel={hideDatePicker}
+            />
           </View>
 
           <View style={styles.rightColumn}>
             <Text style={styles.title}>{card.title}</Text>
+            <View style={styles.ratingContainer}>
+              <View style={styles.starRating}>
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <TouchableOpacity
+                    key={star}
+                    onPress={() => setRating(star)}
+                    onLongPress={resetRating}
+                    activeOpacity={0.7}
+                  >
+                    <FontAwesome
+                      name={star <= rating ? "star" : "star-o"}
+                      size={24}
+                      color="#8B0000"
+                      style={{ marginHorizontal: 4 }}
+                    />
+                  </TouchableOpacity>
+                ))}
+                {rating > 0 && (
+                  <TouchableOpacity
+                    onPress={resetRating}
+                    style={styles.resetButton}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.resetButtonText}>X</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
           </View>
         </View>
 
@@ -232,6 +299,49 @@ const styles = StyleSheet.create({
     backgroundColor: "#DB7093",
     padding: 6,
     borderRadius: 10,
+  },
+  dateContainer: {
+    marginTop: 15,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  dateLabel: {
+    fontSize: 16,
+    color: "#8B0000",
+  },
+  dateText: {
+    fontSize: 16,
+    color: "#4B0082",
+    marginLeft: 5,
+    textDecorationLine: "underline",
+  },
+  ratingContainer: {
+    marginTop: 15,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  ratingLabel: {
+    fontSize: 16,
+    color: "#8B0000",
+  },
+  starRating: {
+    flexDirection: "row",
+    marginLeft: 5,
+    alignItems: "center",
+  },
+  resetButton: {
+    marginLeft: 10,
+    backgroundColor: "#DB7093",
+    borderRadius: 12,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  resetButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    lineHeight: 18,
   },
   title: {
     fontSize: 26,

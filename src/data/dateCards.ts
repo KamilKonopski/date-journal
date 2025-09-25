@@ -5,6 +5,8 @@ export interface DateCardData {
   location: string | null;
   task: { description: string; status: "done" | "notDone" | "notStarted" };
   image: string | null;
+  rating?: number;
+  date?: string;
 }
 
 export const proposals: DateCardData[] = [
